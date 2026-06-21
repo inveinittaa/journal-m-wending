@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问鼎娱乐 · 知识库入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fbe9d7 0%, #f5d6b3 50%, #ebc29a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.2rem;
+            line-height: 1.7;
+            color: #2c241b;
+        }
+
+        .main-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 249, 241, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            box-shadow: 0 20px 40px -12px rgba(140, 80, 30, 0.35), 0 8px 16px -6px rgba(90, 50, 20, 0.15);
+            padding: 2.8rem 2.4rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .main-card {
+                padding: 2rem 1.2rem;
+                border-radius: 28px;
+            }
+        }
+
+        /* 目录感布局 — 网格 / 列表 */
+        .site-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2.8rem;
+        }
+
+        .site-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #b46f3a, #965c2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .site-header .badge {
+            background: #d9b382;
+            color: #3c281a;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            opacity: 0.8;
+        }
+
+        /* 说明区 — 导语 */
+        .intro-block {
+            background: #fef6ed;
+            border-left: 6px solid #cf9f6e;
+            padding: 1.6rem 2rem;
+            border-radius: 24px;
+            margin-bottom: 2.8rem;
+        }
+
+        .intro-block p {
+            font-size: 1.05rem;
+            max-width: 800px;
+        }
+
+        .intro-block strong {
+            color: #7a4d25;
+        }
+
+        /* 目录网格 — 卡片式按钮 */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0 2.8rem 0;
+        }
+
+        .dir-card {
+            background: #fffffffa;
+            border-radius: 28px;
+            padding: 1.6rem 1.4rem 1.8rem;
+            box-shadow: 0 6px 14px rgba(150, 90, 40, 0.08);
+            transition: transform 0.15s ease, box-shadow 0.2s;
+            border: 1px solid #f3e2d0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dir-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 24px -8px rgba(130, 70, 30, 0.18);
+            border-color: #dbb58b;
+        }
+
+        .dir-card .emoji-icon {
+            font-size: 1.7rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .dir-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #543d2a;
+            margin-bottom: 0.4rem;
+        }
+
+        .dir-card p {
+            font-size: 0.9rem;
+            color: #4c3a2b;
+            opacity: 0.8;
+            flex: 1;
+        }
+
+        .dir-card .tag {
+            display: inline-block;
+            margin-top: 1rem;
+            background: #eddccb;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #4a3322;
+            align-self: flex-start;
+        }
+
+        /* 提示区 + 相关信息区 (双列) */
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2.4rem 0 2.2rem;
+        }
+
+        .info-panel {
+            flex: 1 1 220px;
+            background: rgba(255, 241, 226, 0.5);
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem;
+            border: 1px solid #ebd3bb;
+        }
+
+        .info-panel h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6e4b2c;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .info-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-panel li {
+            margin-bottom: 0.5rem;
+            font-size: 0.92rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .info-panel li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #b47d51;
+            font-weight: bold;
+        }
+
+        .info-panel p, .info-panel .hint-text {
+            font-size: 0.92rem;
+        }
+
+        .hint-badge {
+            background: #dbb58b;
+            color: #302119;
+            padding: 0.15rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.6rem;
+        }
+
+        /* 链接 — 圆角按钮感 自然嵌入句子 */
+        .link-sentence {
+            background: #f5e5d7;
+            border-radius: 80px;
+            padding: 0.8rem 1.8rem;
+            display: inline-block;
+            margin: 1.2rem 0 0.2rem;
+            font-size: 0.95rem;
+        }
+
+        .link-sentence a {
+            color: #7a4d25;
+            text-decoration: none;
+            font-weight: 600;
+            background: #fff3e8;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            transition: background 0.15s, color 0.15s;
+            border: 1px solid transparent;
+        }
+
+        .link-sentence a:hover {
+            background: #dbb58b;
+            color: #2b1d12;
+            border-color: #b47d51;
+        }
+
+        /* FAQ 摘要 精简 */
+        .faq-summary {
+            margin-top: 1.8rem;
+            padding: 1.6rem 0 0.4rem;
+            border-top: 2px dashed #dbbc9b;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 600;
+            color: #543d2a;
+            margin-bottom: 0.1rem;
+        }
+
+        .faq-item span {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-note {
+            margin-top: 2.4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            border-top: 1px solid #e6d2be;
+            padding-top: 1.6rem;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 480px) {
+            .site-header h1 {
+                font-size: 1.6rem;
+            }
+            .intro-block {
+                padding: 1.2rem 1.2rem;
+            }
+            .dir-card {
+                padding: 1.2rem;
+            }
+            .info-panel {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="main-card">
+    <div class="site-header">
+        <h1>📚 问鼎 · 知识索引</h1>
+        <span class="badge">信息入口 · 目录</span>
+    </div>
+
+    <!-- 说明区 -->
+    <div class="intro-block">
+        <p><strong>问鼎娱乐</strong> 是一个综合信息与服务平台。本页以知识库索引的形式，帮您快速识别网站用途、内容分区以及常见疑问。您将看到功能分类、使用提示以及相关参考信息，方便直接定位。</p>
+    </div>
+
+    <!-- 目录感布局 (四个卡片) -->
+    <div class="directory-grid">
+        <div class="dir-card">
+            <span class="emoji-icon">🎮</span>
+            <h3>互动与玩法</h3>
+            <p>涵盖休闲、竞技、策略等多类型场景，提供清晰规则和参与指引。</p>
+            <span class="tag">场景分类</span>
+        </div>
+        <div class="dir-card">
+            <span class="emoji-icon">📋</span>
+            <h3>内容指南</h3>
+            <p>活动说明、更新记录与常见规则，方便参与者快速了解当前动态。</p>
+            <span class="tag">帮助文档</span>
+        </div>
+        <div class="dir-card">
+            <span class="emoji-icon">🔐</span>
+            <h3>账户与安全</h3>
+            <p>注册流程、隐私设置以及账户保护相关的基本步骤与提示。</p>
+            <span class="tag">知识卡片</span>
+        </div>
+        <div class="dir-card">
+            <span class="emoji-icon">🧭</span>
+            <h3>导航与支持</h3>
+            <p>平台结构、常见功能入口以及联络方式的信息汇总。</p>
+            <span class="tag">相关资源</span>
+        </div>
+    </div>
+
+    <!-- 提示区 + 相关信息区  双列布局 -->
+    <div class="info-row">
+        <div class="info-panel">
+            <h4>💡 使用提示</h4>
+            <ul>
+                <li>优先阅读对应模块的说明，能快速上手。</li>
+                <li>部分功能需要完成基础设置，可在“账户与安全”中查看。</li>
+                <li>遇到不确定的内容，可以参考分类标签或 FAQ 摘要。</li>
+            </ul>
+            <span class="hint-badge">建议先浏览分类</span>
+        </div>
+        <div class="info-panel">
+            <h4>📌 相关信息</h4>
+            <ul>
+                <li>内容更新以官方公告为准。</li>
+                <li>平台规则保持透明，可在对应区域找到原文。</li>
+                <li>如需直接了解主体服务，可前往 <a href="https://m--wending.com" style="color:#7a4d25; font-weight:500; text-decoration:underline; text-underline-offset:3px;">问鼎娱乐</a> 查看完整信息。</li>
+            </ul>
+            <p class="hint-text" style="margin-top:0.8rem;">🔍 更多细节整合于知识库内。</p>
+        </div>
+    </div>
+
+    <!-- 自然嵌入链接的句子（按钮感） -->
+    <div class="link-sentence">
+        ⚡ 若想直接访问服务主页，请使用 <a href="https://m--wending.com">问鼎娱乐</a> 快捷跳转。
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-summary">
+        <div class="faq-item">
+            <strong>❓ 如何开始使用？</strong>
+            <span>浏览上方分类卡片，选择您感兴趣的区域，每个卡片都附有简要说明。更详细的指引收录于内容指南模块。</span>
+        </div>
+        <div class="faq-item">
+            <strong>❓ 信息是否保持更新？</strong>
+            <span>平台会定期整理相关说明与规则，建议以最新发布的内容为准。本索引页仅作为结构化参考。</span>
+        </div>
+        <div class="faq-item">
+            <strong>❓ 遇到问题怎么办？</strong>
+            <span>可以查阅账户与安全分类，或通过导航支持模块中的联系方式获取帮助。</span>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        · 知识库入口 · 内容仅供参考 · 具体以平台实际信息为准 ·
+    </div>
+</div>
+</body>
+</html>
