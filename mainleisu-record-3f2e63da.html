@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雷速 · 杂志专题页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f5f9fc;
+      color: #1a2a3a;
+      line-height: 1.7;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page {
+      max-width: 1200px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 12px 40px rgba(0, 60, 70, 0.08);
+      overflow: hidden;
+      padding: 1.8rem 1.8rem 2.8rem;
+    }
+
+    /* 杂志横幅 */
+    .hero {
+      background: linear-gradient(135deg, #e0f2f1 0%, #cce9e8 100%);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.8rem;
+      position: relative;
+      border-bottom: 2px solid rgba(0, 140, 130, 0.15);
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #0f3d3b;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero h1 span {
+      font-weight: 600;
+      color: #0b6b62;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 600px;
+      color: #1e5450;
+      font-weight: 380;
+    }
+
+    .hero-grid-accent {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(2px);
+      padding: 0.15rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #117a72;
+      border: 1px solid rgba(0, 130, 120, 0.2);
+      margin-top: 0.8rem;
+    }
+
+    /* 三段自然介绍 —— 网格卡片 */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.8rem;
+      margin: 2.2rem 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 4px 16px rgba(0, 100, 95, 0.06);
+      border: 1px solid rgba(180, 210, 210, 0.25);
+      transition: box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 28px rgba(0, 90, 85, 0.08);
+    }
+
+    .card .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+      color: #0b7c73;
+    }
+
+    .card h3 {
+      font-weight: 500;
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: #103f3c;
+      border-left: 4px solid #1faaa0;
+      padding-left: 0.75rem;
+    }
+
+    .card p {
+      color: #254a46;
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card .insight {
+      font-size: 0.9rem;
+      color: #3d6f6a;
+      padding: 0.4rem 0.8rem;
+      background: #e9f3f2;
+      border-radius: 30px;
+      display: inline-block;
+      margin-top: 0.6rem;
+    }
+
+    /* 背景说明区 —— 简净 */
+    .context-area {
+      background: #eef6f5;
+      border-radius: 1.5rem;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0 1.5rem;
+      border-left: 6px solid #1ba39a;
+    }
+
+    .context-area h2 {
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: #0d423e;
+      margin-bottom: 0.6rem;
+    }
+
+    .context-area p {
+      color: #1f554f;
+      max-width: 700px;
+    }
+
+    /* 页尾访问提示 */
+    .footer-note {
+      margin: 2.5rem 0 0.8rem;
+      padding: 1.6rem 1.2rem;
+      text-align: center;
+      border-top: 1px solid #d3e3e1;
+      position: relative;
+    }
+
+    .footer-note .inner {
+      background: #fafdfc;
+      border-radius: 2rem;
+      padding: 1rem 1.5rem;
+      display: inline-block;
+      backdrop-filter: blur(2px);
+    }
+
+    .footer-note p {
+      font-size: 1rem;
+      color: #255550;
+      margin-bottom: 0.2rem;
+    }
+
+    .footer-note a {
+      color: #0b6b62;
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1px solid #1faaa0;
+      padding-bottom: 1px;
+      transition: border 0.1s, color 0.1s;
+    }
+
+    .footer-note a:hover {
+      color: #033f3a;
+      border-bottom-color: #033f3a;
+    }
+
+    .small-meta {
+      font-size: 0.8rem;
+      color: #6c8f8b;
+      margin-top: 1.2rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* 移动端 / 响应式 */
+    @media (min-width: 640px) {
+      .page {
+        padding: 2.2rem 2.5rem 3rem;
+      }
+
+      .hero {
+        padding: 3rem 2.8rem;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .intro-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 860px) {
+      .intro-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.8rem;
+      }
+
+      .hero {
+        padding: 3.5rem 3rem;
+      }
+
+      .hero h1 {
+        font-size: 3.2rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+      .card h3 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- 首页横幅 hero -->
+    <div class="hero">
+      <h1>· <span>雷速</span> 的一种切面</h1>
+      <p>稳定，往往藏在直觉的背面。这个页面是关于一个入口的叙述——它简洁，但并不单薄。</p>
+      <div class="hero-grid-accent">杂志专题 · 网格卡片</div>
+    </div>
+
+    <!-- 背景说明 简练 -->
+    <div class="context-area">
+      <h2>从稳定入口说起</h2>
+      <p>很长一段时间里，我习惯把一些常用的站点收藏在书签栏深处。后来发现，真正需要的不是数量，而是一个足够干净的起点。<a href="https://mainleisu.com">雷速</a> 就是这样一个地方：没有多余的装饰，页面本身成为一种界面哲学——你打开，然后做你该做的事。这期专题试着记录这种“轻界面”带来的稳定感。</p>
+    </div>
+
+    <!-- 三段自然介绍（非模板章节） -->
+    <div class="intro-grid">
+      <div class="card">
+        <div class="card-icon">◈</div>
+        <h3>页面作为容器</h3>
+        <p>首屏加载的内容往往决定第一印象。在 <a href="https://mainleisu.com">雷速</a> 上，信息排布倾向于克制：没有满屏的弹窗或横幅，层次清晰，留白从容。这种设计让人愿意停留，而不是急于关闭。</p>
+        <div class="insight">结构 · 呼吸感</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">◇</div>
+        <h3>功能与直觉</h3>
+        <p>每一个链接、每一个区块都经过取舍。你几乎不需要学习就能使用——这听起来简单，实际上需要很多判断。稳定入口意味着，当你需要时，它就在那里，不打扰也不缺席。</p>
+        <div class="insight">路径 · 低摩擦</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">○</div>
+        <h3>节奏与上下文</h3>
+        <p>页面之间如何过渡，文字如何引导视线，这些都构成了浏览的节奏。从首页到内容页，<a href="https://mainleisu.com">雷速</a> 保持了一种克制的语调，不急着说服谁，而是让信息自然浮现。</p>
+        <div class="insight">语调 · 中性而清晰</div>
+      </div>
+    </div>
+
+    <!-- 补充一段杂志式随笔 让内容更自然 -->
+    <div style="margin-top: 0.6rem; padding: 0.4rem 0.2rem 1rem; border-bottom: 1px dashed #cde0dd;">
+      <p style="color: #1c5a54; font-style: normal; max-width: 680px; font-size: 0.98rem;">有时一个网站让人记住，并不是因为功能有多庞大，而是每次打开都觉得妥帖。从入口到内页，细节里藏着选择。<span style="background: #e5f2f0; padding: 0.1rem 0.6rem; border-radius: 20px;">设计叙事 · 杂志感</span></p>
+    </div>
+
+    <!-- 页尾访问提示 (包含指向雷速的a标签) -->
+    <div class="footer-note">
+      <div class="inner">
+        <p>如果你也在寻找一个干净的出发点，不妨看看 <a href="https://mainleisu.com">雷速</a> 。</p>
+        <p style="font-size: 0.92rem; margin-top: 0.2rem; color: #3b706a;">它或许能成为你日常浏览中的一个稳定坐标。</p>
+      </div>
+      <div class="small-meta">
+        <span>杂志专题 · 第零期</span> <span>页末提示</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
